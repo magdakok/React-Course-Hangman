@@ -13,13 +13,14 @@ class Hangman extends Component {
   /** by default, allow 6 guesses and use provided gallows images. */
   static defaultProps = {
     maxWrong: 6,
-    images: [[img0,"0 wrong guesses"], [img1,"1 wrong guess"],[img2,"2 wrong guesses"], [img3,"3 wrong guesses"], [img4,"4 wrong guesses"], [img5,"5 wrong guesses"], [img6,"6 wrong guesses"]]
+    images: [ img0, img1, img2, img3, img4, img5, img6]
   };
 
   constructor(props) {
     super(props);
-    this.state = { nWrong: 0, guessed: new Set(), answer: 'apple' };
+    this.state = { nWrong: 0, guessed: new Set(), answer: randomWord() };
     this.handleGuess = this.handleGuess.bind(this);
+    this.resetHandler = this.resetHandler.bind(this);
 
   }
 
@@ -58,20 +59,29 @@ class Hangman extends Component {
     ));
   }
 
+  /** reset: reset game */
+
+  resetHandler() {
+    this.setState({ nWrong: 0, guessed: new Set(), answer: randomWord() });
+  }
+
   /** render: render game */
   render() {
   
     return (
       <div className='Hangman'>
         <h1>Hangman</h1>
+        
         <img 
-          src={this.props.images[this.state.nWrong][0]} 
-          alt={`${this.props.images[this.state.nWrong][1]} out of ${this.props.maxWrong}`} 
+          src={this.props.images[this.state.nWrong]} 
+          alt={`${this.state.nWrong} wrong answers out of ${this.props.maxWrong}`} 
         />
         <p className="Hangman-counter">Wrong guesses: {this.state.nWrong}</p>
         <p className='Hangman-word'>{this.guessedWord()}</p>
         
         <p className='Hangman-btns'>{this.state.nWrong < this.props.maxWrong ? this.generateButtons() : `You loose! The answer was: ${this.state.answer.toUpperCase()}`}</p>
+
+        <button onClick={this.resetHandler}>Reset</button>
         
 
 
