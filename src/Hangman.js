@@ -18,7 +18,7 @@ class Hangman extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { nWrong: 0, guessed: new Set(), answer: randomWord() };
+    this.state = { nWrong: 0, guessed: new Set(), answer: randomWord()};
     this.handleGuess = this.handleGuess.bind(this);
     this.resetHandler = this.resetHandler.bind(this);
 
@@ -28,9 +28,10 @@ class Hangman extends Component {
     if guessed letters are {a,p,e}, show "app_e" for "apple"
   */
   guessedWord() {
-    return this.state.answer
-      .split("")
-      .map(ltr => (this.state.guessed.has(ltr) ? ltr : "_"));
+    let word = this.state.answer
+    .split("")
+    .map(ltr => (this.state.guessed.has(ltr) ? ltr : "_"));
+    return word;
   }
 
   /** handleGuest: handle a guessed letter:
@@ -67,7 +68,8 @@ class Hangman extends Component {
 
   /** render: render game */
   render() {
-  
+    let isWinner = this.guessedWord().join("") === this.state.answer;
+
     return (
       <div className='Hangman'>
         <h1>Hangman</h1>
@@ -78,14 +80,10 @@ class Hangman extends Component {
         />
         <p className="Hangman-counter">Wrong guesses: {this.state.nWrong}</p>
         <p className='Hangman-word'>{this.guessedWord()}</p>
-        
         <p className='Hangman-btns'>{this.state.nWrong < this.props.maxWrong ? this.generateButtons() : `You loose! The answer was: ${this.state.answer.toUpperCase()}`}</p>
 
-        <button onClick={this.resetHandler}>Reset</button>
-        
+        {this.state.nWrong >= this.props.maxWrong && <button onClick={this.resetHandler}>Reset</button>}
 
-
-        
       </div>
     );
   }
