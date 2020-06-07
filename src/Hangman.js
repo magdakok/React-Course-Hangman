@@ -12,7 +12,7 @@ class Hangman extends Component {
   /** by default, allow 6 guesses and use provided gallows images. */
   static defaultProps = {
     maxWrong: 6,
-    images: [img0, img1, img2, img3, img4, img5, img6]
+    images: [[img0,"0 wrong guesses"], [img1,"1 wrong guess"],[img2,"2 wrong guesses"], [img3,"3 wrong guesses"], [img4,"4 wrong guesses"], [img5,"5 wrong guesses"], [img6,"6 wrong guesses"]]
   };
 
   constructor(props) {
@@ -47,6 +47,7 @@ class Hangman extends Component {
     return "abcdefghijklmnopqrstuvwxyz".split("").map(ltr => (
       <button
         value={ltr}
+        key={ltr}
         onClick={this.handleGuess}
         disabled={this.state.guessed.has(ltr)}
       >
@@ -60,7 +61,10 @@ class Hangman extends Component {
     return (
       <div className='Hangman'>
         <h1>Hangman</h1>
-        <img src={this.props.images[this.state.nWrong]} />
+        <img 
+          src={this.props.images[this.state.nWrong][0]} 
+          alt={`${this.props.images[this.state.nWrong][1]} out of ${this.props.maxWrong}`} 
+        />
         <p className='Hangman-word'>{this.guessedWord()}</p>
         <p className='Hangman-btns'>{this.generateButtons()}</p>
       </div>
