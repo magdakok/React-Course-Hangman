@@ -69,21 +69,27 @@ class Hangman extends Component {
   /** render: render game */
   render() {
     let isWinner = this.guessedWord().join("") === this.state.answer;
-
+    let isLoser = !isWinner && (this.state.nWrong >= this.props.maxWrong);
+    let winnerInterface = <div className='Hangman-winner'>You won!</div>;
+    let loserInterface = <div className='Hangman-looser'>You lose! The answer was: {this.state.answer.toUpperCase()}</div>;
+    let gamePlay = <p className='Hangman-btns'>{this.generateButtons()}</p>
+    
     return (
       <div className='Hangman'>
         <h1>Hangman</h1>
-        
-        <img 
-          src={this.props.images[this.state.nWrong]} 
-          alt={`${this.state.nWrong} wrong answers out of ${this.props.maxWrong}`} 
-        />
-        <p className="Hangman-counter">Wrong guesses: {this.state.nWrong}</p>
-        <p className='Hangman-word'>{this.guessedWord()}</p>
-        <p className='Hangman-btns'>{this.state.nWrong < this.props.maxWrong ? this.generateButtons() : `You loose! The answer was: ${this.state.answer.toUpperCase()}`}</p>
-
-        {this.state.nWrong >= this.props.maxWrong && <button onClick={this.resetHandler}>Reset</button>}
-
+        <div className="Hangman-mainbox">
+          <div className="Hangman-imagebox">
+              <img src={this.props.images[this.state.nWrong]} alt={`${this.state.nWrong} wrong answers out of ${this.props.maxWrong}`} />
+          </div>
+          <div className="Hangman-game">
+              <p className='Hangman-word'>{this.guessedWord()}</p>
+              {isWinner && winnerInterface}
+              {isLoser && loserInterface}
+              {(isWinner || isLoser) && <button className="Hangman-nextBtn" onClick={this.resetHandler}>Reset</button>}
+              {(!isWinner && !isLoser) && gamePlay}
+              <p className="Hangman-counter">Wrong guesses: {this.state.nWrong}</p>
+          </div>
+        </div>
       </div>
     );
   }
