@@ -1,6 +1,6 @@
 # The Modern React Bootcamp Course refactoring exercise: Hangman
 
-Refactoring hangman game code to make it work correctly.
+**Refactoring hangman game code to make it work correctly.**
 
 ---
 
