@@ -2,6 +2,8 @@
 
 Refactoring hangman game code to make it work correctly.
 
+---
+
 ### Challenges:
 * adding key props
 * adding wrong guesses counter
@@ -9,3 +11,8 @@ Refactoring hangman game code to make it work correctly.
 * adding alternative text to hangman image describing the situation
 * using a random word from a list
 * adding restart button
+
+---
+
+### Setup
+Clone this repo to your desktop and run `npm install` to install all the dependencies.
